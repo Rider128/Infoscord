@@ -51,12 +51,12 @@ function destruct(msg) {
     if (!db[msg_t[w1]]) {
       db[msg_t[w1]] = 0;
     }
-    for (var w2 in db) {
-      if (comp(msg_t[w1], msg_t[w2]) < 10) {
-        console.log(msg_t[w1], msg_t[w2]);
-        words.push(msg_t[w2]);
+    db.forEach( entry => {
+      if (comp(msg_t[w1], msg_t[entry]) < 10) {
+        console.log(msg_t[w1], msg_t[entry]);
+        words.push(msg_t[entry]);
       }
-    }
+    });
     for (w2 in words) {
       db[msg_t[w2]] += 1;
     }
