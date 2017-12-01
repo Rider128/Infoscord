@@ -52,9 +52,10 @@ function destruct(msg) {
       db[msg_t[w1]] = 0;
     }
     for (var w2 in db) {
-      if (comp(msg_t[w1], db[w2]) < 10) {
-        console.log(msg_t[w1], db[w2]);
-        words.push(db[w2]);
+      db_t = Object.keys(db);
+      if (comp(msg_t[w1], db_t[w2]) < 10) {
+        console.log(msg_t[w1], db_t[w2]);
+        words.push(db_t[w2]);
       }
     }
     for (w2 in words) {
