@@ -38,16 +38,14 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if (!destruct(message.content)) {
-      db['']
-    };
+    destruct(message.content);
   });
 
 client.login(token);
 
 function destruct(msg) {
   var msg_t = msg.split(" ");
-  for (var w1 in msg) {
+  for (var w1 in msg_t) {
     words = [w1];
     if (!db[w1]) {
       db[w2] = 0;
@@ -62,7 +60,7 @@ function destruct(msg) {
       db[w2] += 1
     }
   }
-  fs.writeFile(config.webroot + "/db.json", JSON.stringify(db), function(err) {
+  fs.writeFile("./db.json", JSON.stringify(db), function(err) {
     if (err) {
       return console.log(err);
     }
