@@ -69,12 +69,11 @@ function destruct(msg) {
 function comp(w1, w2) {
   var s = 0;
   var word1 = JSON.parse(fs.readFileSync('word.json'));
-  var w1_t = w1.split("");
+  var w1_t = w1.toLowerCase().split("");
   var word2 = JSON.parse(fs.readFileSync('word.json'));
-  var w2_t = w2.split("");
+  var w2_t = w2.toLowerCase().split("");
 
   for (var l in w1_t) {
-    console.log([w1_t[l]]);
     word1[w1_t[l]] += 1;
   }
 
@@ -82,6 +81,7 @@ function comp(w1, w2) {
     word2[w2_t[l]] += 1;
   }
 
+  console.log(word1,word2);
   for (var l = 0; l < 26; ++l) {
     s += Math.pow((word1[l] - word2[l]), 2);
   }
