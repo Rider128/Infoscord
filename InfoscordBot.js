@@ -42,7 +42,7 @@ client.on('message',
       destruct(message.channel.name, message.content);
       var channel = msg_channel(message.channel.name, message.content)
       if (channel !== "") {
-        message.channel.send(message.author.username + ": Le channel " + channel + " est plus adapté à votre conevrsation. ^^");
+        message.channel.send(message.author.username + ": Le channel #" + channel + " est plus adapté à votre conevrsation. ^^");
       }
     }
   });
@@ -57,41 +57,37 @@ function destruct(channel, msg) {
   console.log(msg_t);
   if (!db["channel"]) {
     db["channel"] = {};
-    db["channel"][channel]["name"] = channel;
-    db["channel"][channel]["count"] = 0;
   }
   if (!db["word"]) {
     db["word"] = {};
   }
   for (var w1 in msg_t) {
-    if (msg_t[w1].lenght > 4) {
-      words = [msg_t[w1]];
-      if (!db["word"][msg_t[w1]]) {
-        db["word"][msg_t[w1]] = {};
-        db["word"][msg_t[w1]]["channel"] = {}
-        db["word"][msg_t[w1]]["name"] = msg_t[w1];
+    words = [msg_t[w1]];
+    if (!db["word"][msg_t[w1]]) {
+      db["word"][msg_t[w1]] = {};
+      db["word"][msg_t[w1]]["channel"] = {}
+      db["word"][msg_t[w1]]["name"] = msg_t[w1];
+    }
+    for (var w2 in db["word"]) {
+      if (comp(msg_t[w1], db["word"][w2]["name"]) < config.matchn) {
+        console.log(msg_t[w1], db["word"][w2]["name"]);
+        words.push(db["word"][w2]["name"]);
       }
-      for (var w2 in db["word"]) {
-        if (comp(msg_t[w1], db["word"][w2]["name"]) < config.matchn) {
-          console.log(msg_t[w1], db["word"][w2]["name"]);
-          words.push(db["word"][w2]["name"]);
-        }
-      }
-      for (var w2 in words) {
-        if (!db["channel"][channel]) {
-          db["channel"][channel] = {};
-          db["channel"][channel]["count"] = 0;
-          db["channel"][channel]["name"] = channel;
+    }
+    for (var w2 in words) {
+      if (!db["channel"][channel]) {
+        db["channel"][channel] = {};
+        db["channel"][channel]["count"] = 0;
+        db["channel"][channel]["name"] = channel;
 
-        }
-        if (!db["word"][words[w2]]["channel"][channel]) {
-          db["word"][words[w2]]["channel"][channel] = {};
-          db["word"][words[w2]]["channel"][channel]["count"] = 0;
-          db["word"][words[w2]]["channel"][channel]["name"] = channel;
-        }
-        db["channel"][channel]["count"] += 1;
-        db["word"][words[w2]]["channel"][channel]["count"] += 1;
       }
+      if (!db["word"][words[w2]]["channel"][channel]) {
+        db["word"][words[w2]]["channel"][channel] = {};
+        db["word"][words[w2]]["channel"][channel]["count"] = 0;
+        db["word"][words[w2]]["channel"][channel]["name"] = channel;
+      }
+      db["channel"][channel]["count"] += 1;
+      db["word"][words[w2]]["channel"][channel]["count"] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
