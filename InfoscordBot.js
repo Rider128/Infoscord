@@ -74,6 +74,7 @@ function destruct(channel, msg) {
     }
     for (var w2 in words) {
       if (!db["channel"][channel]) {
+        db["channel"][channel] = {};
         db["channel"][channel]["count"] = 0;
         db["channel"][channel]["name"] = channel;
 
