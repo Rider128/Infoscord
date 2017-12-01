@@ -39,8 +39,9 @@ client.on('guildMemberUpdate',
 client.on('message',
   (message) => {
     destruct(message.channel.name, message.content);
-    if (msg_channel(message.channel.name, message.content)) {
-      message.channel.send("test");
+    var channel = msg_channel(message.channel.name, message.content)
+    if (  channel !== "") {
+      message.channel.send(message.author.username + ": Le channel " + channel + " est plus adapté à votre conevrsation. ^^");
     }
   });
 
@@ -73,12 +74,14 @@ function destruct(channel, msg) {
     }
     for (var w2 in words) {
       if (!db["channel"][channel]) {
-        db["channel"][channel] = 0;
+        db["channel"][channel]["count"] = 0;
+        db["channel"][channel]["name"] = channel;
+
       }
       if (!db["word"][words[w2]]["channel"][channel]) {
         db["word"][words[w2]]["channel"][channel] = 0;
       }
-      db["channel"][channel] += 1;
+      db["channel"][channel]["count"] += 1;
       db["word"][words[w2]]["channel"][channel] += 1;
     }
   }
@@ -111,6 +114,7 @@ function msg_channel(channel, msg) {
   msg_c = 0;
   channel_c = 0;
   count = 0;
+  c1 = channel;
   for (w in msg_t) {
     ++msg_c;
     nc = db["word"][msg_t[w]]["channel"][channel] / db["channel"][channel];
@@ -123,13 +127,15 @@ function msg_channel(channel, msg) {
       }
       ++channel_c;
       if (db["word"][msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
+        nc = db["word"][msg_t[w]]["channel"][c];
+        c1 = c;
         ++count;
       }
     }
   }
   console.log(count);
   if (2 * count >= channel_c * msg_c) {
-    return true;
+    return db["channel"][c]["name"];
   }
-  return false;
+  return "";
 }
