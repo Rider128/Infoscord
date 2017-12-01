@@ -80,10 +80,12 @@ function destruct(channel, msg) {
 
       }
       if (!db["word"][words[w2]]["channel"][channel]) {
-        db["word"][words[w2]]["channel"][channel] = 0;
+        db["word"][words[w2]]["channel"][channel] = {};
+        db["word"][words[w2]]["channel"][channel]["count"] = 0;
+        db["word"][words[w2]]["channel"][channel]["name"] = channel;
       }
       db["channel"][channel]["count"] += 1;
-      db["word"][words[w2]]["channel"][channel] += 1;
+      db["word"][words[w2]]["channel"][channel]["count"] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
@@ -120,12 +122,6 @@ function msg_channel(channel, msg) {
     ++msg_c;
     nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
-      if (!db["channel"][c]) {
-        db["channel"][c] = {};
-        db["channel"][c]["name"] = c;
-        db["channel"][c]["count"] = 0;
-
-      }
       if (!db["word"][msg_t[w]]["channel"][c]) {
         db["word"][msg_t[w]]["channel"][c] = {};
         db["word"][msg_t[w]]["channel"][c]["count"] = 0;
