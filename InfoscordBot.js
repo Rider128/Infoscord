@@ -48,7 +48,7 @@ function destruct(msg) {
   for (var w1 in msg_t) {
     words = [w1];
     if (!db[w1]) {
-      db[w2] = 0;
+      db[w1] = 0;
     }
     for (var w2 in db) {
       if (comp(w1, w2) < 10) {
