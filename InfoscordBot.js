@@ -49,6 +49,7 @@ function destruct(msg) {
   for (var w1 in msg_t) {
     words = [msg_t[w1]];
     if (!db[msg_t[w1]]) {
+      db[msg_t[w1]] = {};
       db[msg_t[w1]]["name"] = msg_t[w1];
       db[msg_t[w1]]["count"] = 0;
     }
