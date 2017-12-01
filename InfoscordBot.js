@@ -55,8 +55,8 @@ function destruct(channel, msg) {
   if (!db["channel"]) {
     db["channel"] = {};
   }
-  if (!db["name"]) {
-    db["name"] = {};
+  if (!db["word"]) {
+    db["word"] = {};
   }
   for (var w1 in msg_t) {
     words = [msg_t[w1]];
