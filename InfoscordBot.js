@@ -15,7 +15,7 @@ client.on('userUpdate',
         adminProfile[newUser.id] = {};
         adminProfile[newUser.id]['username'] = newUser.username;
         adminProfile[newUser.id]['avatarURL'] = newUser.avatarURL;
-        fs.writeFile("/var/www/infoscord.lokarde.fr/adminProfile.json", JSON.stringify(adminProfile), function(err) {
+        fs.writeFile(config.webroot + "/adminProfile.json", JSON.stringify(adminProfile), function(err) {
                 if(err) {
                         return console.log(err);
                 }
@@ -27,7 +27,7 @@ client.on('guildMemberUpdate',
         adminProfile[newMember.user.id] = {};
         adminProfile[newMember.user.id]['username'] = newMember.user.username;
         adminProfile[newMember.user.id]['avatarURL'] = newMember.user.avatarURL;
-        fs.writeFile("/var/www/infoscord.lokarde.fr/adminProfile.json", JSON.stringify(adminProfile), function(err) {
+        fs.writeFile(config.webroot + "/adminProfile.json", JSON.stringify(adminProfile), function(err) {
                 if(err) {
                         return console.log(err);
                 }
