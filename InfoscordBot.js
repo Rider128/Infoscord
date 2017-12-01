@@ -74,11 +74,11 @@ function comp(w1, w2) {
   var w2_t = w2.split("");
 
   for (var l in w1_t) {
-    word1[w1[l]] += 1;
+    word1[w1_t[l]] += 1;
   }
 
   for (var l in w2_t) {
-    word2[w2[l]] += 1;
+    word2[w2_t[l]] += 1;
   }
 
   for (var l = 0; l < 26; ++l) {
