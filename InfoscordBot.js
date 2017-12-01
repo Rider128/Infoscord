@@ -52,19 +52,15 @@ function destruct(msg) {
     }
     for (var w2 in db) {
       if (comp(w1, w2) < 10) {
-        console.log(msg)
+        console.log(msg);
         words.push(w2);
       }
     }
     for (w2 in words) {
-      db[w2] += 1
+      db[w2] += 1;
     }
   }
-  fs.writeFile(config.webroot + "/db.json", JSON.stringify(db), function(err) {
-    if (err) {
-      return console.log(err);
-    }
-  });
+  fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
 }
 
 function comp(w1, w2) {
