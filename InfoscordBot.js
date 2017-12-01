@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const config = require('./config.json')
 const client = new Discord.Client();
 
-const db = JSON.parse(fs.readFileSync("./db.json")) || JSON.parse('{}');
+const db = JSON.parse(fs.readFileSync(config.webroot + "./db.json")) || JSON.parse('{}');
 const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
@@ -60,7 +60,7 @@ function destruct(msg) {
       db[w2] += 1
     }
   }
-  fs.writeFile(webroot + "/db.json", JSON.stringify(db), function(err) {
+  fs.writeFile(config.webroot + "/db.json", JSON.stringify(db), function(err) {
     if (err) {
       return console.log(err);
     }
