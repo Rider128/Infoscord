@@ -55,28 +55,31 @@ function destruct(channel, msg) {
   if (!db["channel"]) {
     db["channel"] = {};
   }
+  if (!db["name"]) {
+    db["name"] = {};
+  }
   for (var w1 in msg_t) {
     words = [msg_t[w1]];
     if (!db[msg_t[w1]]) {
-      db[msg_t[w1]] = {};
-      db[msg_t[w1]]["channel"] = {}
-      db[msg_t[w1]]["name"] = msg_t[w1];
+      db["word"][msg_t[w1]] = {};
+      db["word"][msg_t[w1]]["channel"] = {}
+      db["word"][msg_t[w1]]["name"] = msg_t[w1];
     }
     for (var w2 in db) {
-      if (comp(msg_t[w1], db[w2]["name"]) < config.matchn) {
-        console.log(msg_t[w1], db[w2]["name"]);
-        words.push(db[w2]["name"]);
+      if (comp(msg_t[w1], db["word"][w2]["name"]) < config.matchn) {
+        console.log(msg_t[w1], db["word"][w2]["name"]);
+        words.push(db["word"][w2]["name"]);
       }
     }
     for (var w2 in words) {
       if (!db["channel"][channel]) {
         db["channel"][channel] = 0;
       }
-      if (!db[words[w2]]["channel"][channel]) {
-        db[words[w2]]["channel"][channel] = 0;
+      if (!db["word"][words[w2]]["channel"][channel]) {
+        db["word"][words[w2]]["channel"][channel] = 0;
       }
       db["channel"][channel] += 1;
-      db[words[w2]]["channel"][channel] += 1;
+      db["word"][words[w2]]["channel"][channel] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
@@ -110,16 +113,16 @@ function msg_channel(channel, msg) {
   count = 0;
   for (w in msg_t) {
     ++msg_c;
-    nc = db[msg_t[w]]["channel"][channel] / db["channel"][channel];
+    nc = db["word"][msg_t[w]]["channel"][channel] / db["channel"][channel];
     for (c in db["channel"]) {
       if (!db["channel"][c]) {
         db["channel"][c] = 0;
       }
-      if (!db[msg_t[w]]["channel"][c]) {
-        db[msg_t[w]]["channel"][c] = 0;
+      if (!db["word"][msg_t[w]]["channel"][c]) {
+        db["word"][msg_t[w]]["channel"][c] = 0;
       }
       ++channel_c;
-      if (db[msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
+      if (db["word"][msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
         ++count;
       }
     }
