@@ -45,6 +45,7 @@ client.login(token);
 
 function destruct(msg) {
   var msg_t = msg.split(" ");
+  console.log(msg_t);
   for (var w1 in msg_t) {
     words = [w1];
     if (!db[w1]) {
