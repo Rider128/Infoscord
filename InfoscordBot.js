@@ -69,13 +69,15 @@ function destruct(msg) {
 function comp(w1, w2) {
   var s = 0;
   var word1 = JSON.parse(fs.readFileSync('word.json'));
+  var w1_t = w1.split("");
   var word2 = JSON.parse(fs.readFileSync('word.json'));
+  var w2_t = w2.split("");
 
-  for (var l in w1) {
+  for (var l in w1_t) {
     word1[w1[l]] += 1;
   }
 
-  for (var l in w2) {
+  for (var l in w2_t) {
     word2[w2[l]] += 1;
   }
 
