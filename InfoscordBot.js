@@ -65,7 +65,7 @@ function destruct(channel, msg) {
       db["word"][msg_t[w1]]["channel"] = {}
       db["word"][msg_t[w1]]["name"] = msg_t[w1];
     }
-    for (var w2 in db) {
+    for (var w2 in db["word"]) {
       if (comp(msg_t[w1], db["word"][w2]["name"]) < config.matchn) {
         console.log(msg_t[w1], db["word"][w2]["name"]);
         words.push(db["word"][w2]["name"]);
