@@ -38,7 +38,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-      destruct(message);
+      destruct(message.content);
   });
 
 client.login(token);
