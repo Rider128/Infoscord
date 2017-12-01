@@ -52,7 +52,7 @@ function destruct(msg) {
     }
     for (var w2 in db) {
       if (comp(w1, w2) < 10) {
-        console.log(msg);
+        console.log(w1,w2);
         words.push(w2);
       }
     }
