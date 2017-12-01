@@ -110,6 +110,7 @@ function msg_channel(channel, msg) {
       }
     }
   }
+  console.log(count);
   if (2 * count > channel_c * msg_c) {
     return true;
   }
