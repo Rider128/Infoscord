@@ -72,14 +72,14 @@ function comp(w1, w2) {
   var word2 = JSON.parse(fs.readFileSync('word.json'));
 
   for (var l in w1) {
-    if (word1[l]) {
-      word1[l] += 1;
+    if (word1[w1[l]]) {
+      word1[w1[l]] += 1;
     }
   }
 
   for (var l in w2) {
-    if (word2[l]) {
-      word2[l] += 1;
+    if (word2[w2[l]]) {
+      word2[w2[l]] += 1;
     }
   }
 
