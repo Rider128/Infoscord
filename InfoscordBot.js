@@ -118,16 +118,21 @@ function msg_channel(channel, msg) {
   c1 = channel;
   for (w in msg_t) {
     ++msg_c;
-    nc = db["word"][msg_t[w]]["channel"][channel] / db["channel"][channel];
+    nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
       if (!db["channel"][c]) {
-        db["channel"][c] = 0;
+        db["channel"][c] = {};
+        db["channel"][c]["name"] = c;
+        db["channel"][c]["count"] = 0;
+
       }
       if (!db["word"][msg_t[w]]["channel"][c]) {
-        db["word"][msg_t[w]]["channel"][c] = 0;
+        db["word"][msg_t[w]]["channel"][c] = {};
+        db["word"][msg_t[w]]["channel"][c]["count"] = 0;
+        db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
       ++channel_c;
-      if (db["word"][msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
+      if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
         c1 = c;
         ++count;
       }
