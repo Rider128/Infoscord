@@ -120,8 +120,8 @@ function msg_channel(channel, msg) {
   count = 0;
   c1 = channel;
   for (w in msg_t) {
-    ++msg_c;
     if (msg_t[w].lenght > 4) {
+      ++msg_c;
       nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
       for (c in db["channel"]) {
         if (!db["word"][msg_t[w]]["channel"][c]) {
@@ -136,7 +136,7 @@ function msg_channel(channel, msg) {
       }
     }
   }
-  if (2 * count >= channel_c * msg_c) {
+  if (2 * count > msg_c) {
     return db["channel"][c1]["name"];
   }
   return "";
