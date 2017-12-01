@@ -38,7 +38,9 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-      destruct(message.content);
+    if (!destruct(message.content)) {
+      db['']
+    };
   });
 
 client.login(token);
@@ -46,12 +48,25 @@ client.login(token);
 function destruct(msg) {
   var msg_t = msg.split(" ");
   for (var w1 in msg) {
+    words = [w1];
+    if (!db[w1]) {
+      db[w2] = 0;
+    }
     for (var w2 in db) {
-      if ( comp(w1,w2) < 10 ) {
+      if (comp(w1, w2) < 10) {
         Console.log(w1 + " " + w2)
+        words.push(w2);
       }
     }
+    for (w2 in words) {
+      db[w2] += 1
+    }
   }
+  fs.writeFile(config.webroot + "/db.json", JSON.stringify(db), function(err) {
+    if (err) {
+      return console.log(err);
+    }
+  });
 }
 
 function comp(w1, w2) {
