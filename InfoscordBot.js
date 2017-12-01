@@ -81,8 +81,7 @@ function comp(w1, w2) {
     word2[w2_t[l]] += 1;
   }
 
-  for (var l = 0; l < 26; ++l) {
-    console.log(word1[l] - word2[l]);
+  for (var l in word1 ) {
     s += Math.pow(word1[l] - word2[l], 2);
   }
   return s;
