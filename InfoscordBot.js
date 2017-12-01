@@ -49,17 +49,17 @@ function destruct(msg) {
   for (var w1 in msg_t) {
     words = [msg_t[w1]];
     if (!db[msg_t[w1]]) {
-      db[msg_t[w1]] = 0;
+      db[msg_t[w1]]["name"] = msg_t[w1];
+      db[msg_t[w1]]["count"] = 0;
     }
     for (var w2 in db) {
-      db_t = Object.keys(db);
-      if (comp(msg_t[w1], db_t[w2]) < 10) {
-        console.log(msg_t[w1], db_t[w2]);
-        words.push(db_t[w2]);
+      if (comp(msg_t[w1], db[w2]["name"]) < 10) {
+        console.log(msg_t[w1], db[w2]["name"]);
+        words.push(db[w2]["name"]);
       }
     }
     for (w2 in words) {
-      db[words[w2]] += 1;
+      db[words[w2]]["count"] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
