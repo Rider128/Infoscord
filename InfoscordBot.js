@@ -38,7 +38,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if (message.author.username != "Inforscord" && message.content.lenght > 4) {
+    if (message.author.username != "Inforscord") {
       destruct(message.channel.name, message.content);
       var channel = msg_channel(message.channel.name, message.content)
       if (channel !== "") {
