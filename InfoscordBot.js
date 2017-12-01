@@ -57,6 +57,8 @@ function destruct(channel, msg) {
   console.log(msg_t);
   if (!db["channel"]) {
     db["channel"] = {};
+    db["channel"][channel]["name"] = channel;
+    db["channel"][channel]["count"] = 0;
   }
   if (!db["word"]) {
     db["word"] = {};
