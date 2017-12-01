@@ -38,10 +38,12 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    destruct(message.channel.name, message.content);
-    var channel = msg_channel(message.channel.name, message.content)
-    if (  channel !== "" ) {
-      message.channel.send(message.author.username + ": Le channel " + channel + " est plus adapté à votre conevrsation. ^^");
+    if (message.author.username != "Inforscord") {
+      destruct(message.channel.name, message.content);
+      var channel = msg_channel(message.channel.name, message.content)
+      if (  channel !== "" ) {
+        message.channel.send(message.author.username + ": Le channel " + channel + " est plus adapté à votre conevrsation. ^^");
+      }
     }
   });
 
