@@ -58,7 +58,6 @@ function destruct(channel, msg) {
       db[msg_t[w1]] = {};
       db[msg_t[w1]]["channel"] = {}
       db[msg_t[w1]]["name"] = msg_t[w1];
-      db[msg_t[w1]]["count"] = 0;
     }
     for (var w2 in db) {
       if (comp(msg_t[w1], db[w2]["name"]) < config.matchn) {
@@ -67,6 +66,12 @@ function destruct(channel, msg) {
       }
     }
     for (var w2 in words) {
+      if (!db["channel"][channel]) {
+        db["channel"][channel] = 0;
+      }
+      if (!db[words[w2]]["channel"][channel]) {
+        db[words[w2]]["channel"][channel] = 0;
+      }
       db["channel"][channel] += 1;
       db[words[w2]]["channel"][channel] += 1;
     }
@@ -74,7 +79,7 @@ function destruct(channel, msg) {
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
 }
 
-function comp(w1="", w2="") {
+function comp(w1 = "", w2 = "") {
   var s = 0;
   var word1 = JSON.parse(fs.readFileSync('word.json'));
   var w1_t = w1.toLowerCase().split("");
