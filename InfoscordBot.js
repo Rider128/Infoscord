@@ -128,6 +128,7 @@ function msg_channel(channel, msg) {
         db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
       ++channel_c;
+      console.log(db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"], n);
       if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
         c1 = c;
         ++count;
@@ -136,7 +137,7 @@ function msg_channel(channel, msg) {
   }
   console.log(count);
   if (2 * count >= channel_c * msg_c) {
-    return db["channel"][c]["name"];
+    return db["channel"][c1]["name"];
   }
   return "";
 }
