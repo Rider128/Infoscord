@@ -102,10 +102,10 @@ function msg_channel(channel, msg) {
   count = 0;
   for (w in msg_t) {
     ++msg_c;
-    nc = db[msg_t[w]][channel] / db[channel];
+    nc = db[msg_t[w]]["channel"][channel] / db["channel"][channel];
     for (c in db["channel"]) {
       ++channel_c;
-      if (db[msg_t[w]][c] / db[c] > nc) {
+      if (db[msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
         ++count;
       }
     }
