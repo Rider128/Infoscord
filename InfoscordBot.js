@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const config = require('./config.json')
 const client = new Discord.Client();
 
-const db = JSON.parse(fs.readFileSync("db.json"));
+const db = JSON.parse(fs.readFileSync("./db.json"));
 const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
@@ -54,7 +54,7 @@ function destruct(msg) {
     }
     for (var w2 in db) {
       if (comp(w1, w2) < 10) {
-        console.log(w1 + " " + w2)
+        console.log(msg)
         words.push(w2);
       }
     }
