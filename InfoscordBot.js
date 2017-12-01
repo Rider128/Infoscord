@@ -40,7 +40,7 @@ client.on('message',
   (message) => {
     destruct(message.channel.name, message.content);
     var channel = msg_channel(message.channel.name, message.content)
-    if (  channel !== "") {
+    if (  channel !== "" ) {
       message.channel.send(message.author.username + ": Le channel " + channel + " est plus adapté à votre conevrsation. ^^");
     }
   });
@@ -128,7 +128,6 @@ function msg_channel(channel, msg) {
       }
       ++channel_c;
       if (db["word"][msg_t[w]]["channel"][c] / db["channel"][c] > nc) {
-        nc = db["word"][msg_t[w]]["channel"][c];
         c1 = c;
         ++count;
       }
