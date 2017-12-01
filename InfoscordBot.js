@@ -54,7 +54,7 @@ function destruct(msg) {
       db[msg_t[w1]]["count"] = 0;
     }
     for (var w2 in db) {
-      if (comp(msg_t[w1], db[w2]["name"]) < 10) {
+      if (comp(msg_t[w1], db[w2]["name"]) < config.matchn) {
         console.log(msg_t[w1], db[w2]["name"]);
         words.push(db[w2]["name"]);
       }
