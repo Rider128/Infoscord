@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const config = require('./config.json')
 const client = new Discord.Client();
 
-const db = JSON.parse(fs.readFileSync(config.webroot + "./db.json")) || JSON.parse('{}');
+const db = JSON.parse(fs.readFileSync(config.webroot + "/db.json"));
 const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
