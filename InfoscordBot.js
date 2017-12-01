@@ -46,19 +46,19 @@ client.login(token);
 function destruct(msg) {
   var msg_t = msg.split(" ");
   console.log(msg_t);
-  for (var w1 of msg_t) {
-    words = [w1];
-    if (!db[w1]) {
-      db[w1] = 0;
+  for (var w1 in msg_t) {
+    words = [msg_t[w1]];
+    if (!db[msg_t[w1]]) {
+      db[msg_t[w1]] = 0;
     }
-    for (var w2 of db) {
-      if (comp(w1, w2) < 10) {
-        console.log(w1, w2);
-        words.push(w2);
+    for (var w2 in db) {
+      if (comp(msg_t[w1], db[w2]) < 10) {
+        console.log(msg_t[w1], db[w2]);
+        words.push(db[w2]);
       }
     }
-    for (w2 of words) {
-      db[w2] += 1;
+    for (w2 in words) {
+      db[words[w2]] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
