@@ -74,7 +74,7 @@ function comp(w1, w2) {
   var w2_t = w2.split("");
 
   for (var l in w1_t) {
-    console.log()[w1_t[l]]);
+    console.log([w1_t[l]]);
     word1[w1_t[l]] += 1;
   }
 
