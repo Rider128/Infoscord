@@ -4,7 +4,7 @@ const client = new Discord.Client();
 const config = require('./config.json')
 const token = config.token;
 
-var adminProfile = JSON.parse(fs.readLineSync(config.webroot + "/adminProfile.json"));
+var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
 
 client.on('ready', () => {
   console.log('I am ready!');
