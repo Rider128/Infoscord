@@ -38,12 +38,15 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    destruct(message.content);
+    destruct(message.channel.name, message.content);
+    if (msg_channel(message.channel.name, message.content)) {
+      message.channel.send("test");
+    }
   });
 
 client.login(token);
 
-function destruct(msg) {
+function destruct(channel,msg) {
   var msg_t = msg.split(" ");
   console.log(msg_t);
   for (var w1 in msg_t) {
@@ -60,7 +63,8 @@ function destruct(msg) {
       }
     }
     for (w2 in words) {
-      db[words[w2]]["count"] += 1;
+      db["channel"][channel] += 1;
+      db[words[w2]]["channel"][channel] += 1;
     }
   }
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
@@ -85,4 +89,25 @@ function comp(w1, w2) {
     s += Math.pow(word1[l] - word2[l], 2);
   }
   return s;
+}
+
+function msg_channel(channel, msg) {
+  msg_t = msg.split(" ");
+  msg_c = 0 ;
+  channel_c = 0;
+  count = 0;
+  for (w in msg_t) {
+    ++msg_c;
+    nc = db[msg_t[w]][channel]/db[channel];
+    for (c in db["channel"]) {
+      ++channel_c;
+      if ( db[msg_t[w]][c]/db[c] > nc ) {
+        ++count;
+      }
+    }
+  }
+  if ( 2*count > channel_c * msg_c ) {
+    return true;
+  }
+  return false;
 }
