@@ -117,12 +117,11 @@ function comp(w1 = "", w2 = "") {
 function msg_channel(channel, msg) {
   msg_t = msg.split(" ");
   msg_c = 0;
-  channel_c = 0;
   count = 0;
   c1 = channel;
   for (w in msg_t) {
+    ++msg_c;
     if (msg_t[w].lenght > 4) {
-      ++msg_c;
       nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
       for (c in db["channel"]) {
         if (!db["word"][msg_t[w]]["channel"][c]) {
@@ -130,7 +129,6 @@ function msg_channel(channel, msg) {
           db["word"][msg_t[w]]["channel"][c]["count"] = 0;
           db["word"][msg_t[w]]["channel"][c]["name"] = c;
         }
-        ++channel_c;
         if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
           c1 = c;
           ++count;
