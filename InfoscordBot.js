@@ -40,7 +40,9 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-
+    if ( ! time_count[message.channel] ) {
+      time_count[message.channel] = {};
+    }
     if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
     }
@@ -51,9 +53,9 @@ client.on('message',
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
       if ( ! time_count[message.channel]["sendable"] ) {
-        --time_count;
+        --time_count[message.channel]["count"];
       }
-      if ( time_count[message.channel] == 0) {
+      if ( time_count[message.channel]["count"] == 0 ) {
         time_count[message.channel]["count"] = 10;
         time_count[message.channel]["sendable"] = true;
       }
