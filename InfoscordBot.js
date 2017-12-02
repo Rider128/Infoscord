@@ -135,13 +135,13 @@ function msg_channel(channel, msg) {
         db["word"][msg_t[w]]["channel"][c]["count"] = 0;
         db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
-      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
+      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc*1.3) {
         c1 = c;
         ++count;
       }
     }
   }
-  if (count > msg_c * 80 / 100) {
+  if (count > msg_c * 80 / 100 ) {
     return db["channel"][c1]["name"];
   }
   return "";
