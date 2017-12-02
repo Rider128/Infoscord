@@ -61,7 +61,7 @@ client.on('message',
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name],false) != channel_name) {
         for (w in buff[channel_name]) {
-          ++db["word"][buff[w]]["channel"][channel_name]["count"];
+          ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
           ++db["channel"][channel_name]["count"];
         }
         corrected = true;
