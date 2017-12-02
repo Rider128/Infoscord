@@ -125,7 +125,7 @@ function msg_channel(channel, msg) {
   c1 = channel;
   for (w in msg_t) {
     ++msg_c;
-    if ( !db["word"][msg_t[w]] ) {
+    if ( !db["word"][msg_t[w]]["channel"][channel] ) {
       destruct(channel,msg_t[w]);
     };
     nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
