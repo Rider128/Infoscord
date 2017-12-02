@@ -93,7 +93,6 @@ client.login(token);
 
 function destruct(channel, msg) {
   var msg_t = msg.split(" ");
-  console.log(msg_t);
   if (!db["channel"]) {
     db["channel"] = {};
   }
