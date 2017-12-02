@@ -39,6 +39,9 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
+    if  (!buff[message.channel.name]) {
+      buff[message.channel.name] = "";
+    }
     buff[message.channel.name] = message.content + " " + buff[message.channel.name];
     if (buff[message.channel.name].lenght > 1024) {
       buff[message.channel.name] = buff[message.channel.name].subtring(buff.lenght - 1024);
