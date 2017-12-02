@@ -40,6 +40,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
+
     if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
     }
@@ -49,13 +50,19 @@ client.on('message',
     }
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
+      if ( ! time_count[message.channel]["sendable"] ) {
+        --time_count;
+      }
+      if ( time_count[message.channel] == 0) {
+        time_count[message.channel]["count"] = 10;
+        time_count[message.channel]["sendable"] = true;
+      }
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
         console.log("DETECT: " + channel);
-        --time_count;
-        if ( time_count[channel] == 0) {
+        if ( time_count[channel]["sendable"] ) {
           message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
-          time_count[channel] = 10;
+          time_count[message.channel]["sendable"] = false;
         }
       }
     }
