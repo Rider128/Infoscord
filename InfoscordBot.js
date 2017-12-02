@@ -69,6 +69,7 @@ client.on('message',
       console.log(channel_name + " corrected:", corrected);
     } else {
       if (!message.author.bot) {
+        console.log(channel_name);
         console.log(message.content);
         destruct(channel_name, message.content);
         if (!time_count[channel_name]["sendable"]) {
