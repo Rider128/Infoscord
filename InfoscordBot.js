@@ -70,7 +70,7 @@ client.on('message',
     } else {
       if (!message.author.bot) {
         console.log(channel_name, ":", message.content);
-        destruct(channel_name, message.content);
+        destruct(channel_name, message.content.split(" "));
         if (!time_count[channel_name]["sendable"]) {
           --time_count[channel_name]["count"];
         }
@@ -92,7 +92,7 @@ client.on('message',
 client.login(token);
 
 function destruct(channel, msg) {
-  var msg_t = msg.split(" ");
+  var msg_t = msg;
   if (!db["channel"]) {
     db["channel"] = {};
   }
