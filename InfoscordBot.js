@@ -45,7 +45,7 @@ client.on('message',
     }
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
-      var channel = msg_channel(message.channel.name, buff);
+      var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
         message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
       }
