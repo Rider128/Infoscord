@@ -120,19 +120,17 @@ function msg_channel(channel, msg) {
   count = 0;
   c1 = channel;
   for (w in msg_t) {
-    if (msg_t[w].lenght > 4) {
-      ++msg_c;
-      nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
-      for (c in db["channel"]) {
-        if (!db["word"][msg_t[w]]["channel"][c]) {
-          db["word"][msg_t[w]]["channel"][c] = {};
-          db["word"][msg_t[w]]["channel"][c]["count"] = 0;
-          db["word"][msg_t[w]]["channel"][c]["name"] = c;
-        }
-        if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
-          c1 = c;
-          ++count;
-        }
+    ++msg_c;
+    nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
+    for (c in db["channel"]) {
+      if (!db["word"][msg_t[w]]["channel"][c]) {
+        db["word"][msg_t[w]]["channel"][c] = {};
+        db["word"][msg_t[w]]["channel"][c]["count"] = 0;
+        db["word"][msg_t[w]]["channel"][c]["name"] = c;
+      }
+      if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
+        c1 = c;
+        ++count;
       }
     }
   }
