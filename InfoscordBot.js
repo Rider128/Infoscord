@@ -39,7 +39,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if  (!buff[message.channel.name]) {
+    if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
     }
     buff[message.channel.name] = message.content + " " + buff[message.channel.name];
@@ -125,8 +125,8 @@ function msg_channel(channel, msg) {
   c1 = channel;
   for (w in msg_t) {
     ++msg_c;
-    if ( !db["word"][msg_t[w]] || !db["word"][msg_t[w]]["channel"][channel] ) {
-      destruct(channel,msg_t[w]);
+    if (!db["word"][msg_t[w]] || !db["word"][msg_t[w]]["channel"][channel]) {
+      destruct(channel, msg_t[w]);
     };
     nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
@@ -135,13 +135,13 @@ function msg_channel(channel, msg) {
         db["word"][msg_t[w]]["channel"][c]["count"] = 0;
         db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
-      if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
+      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
         c1 = c;
         ++count;
       }
     }
   }
-  if ( (1+80/100)*count > msg_c) {
+  if (count > msg_c * 80 / 100) {
     return db["channel"][c1]["name"];
   }
   return "";
