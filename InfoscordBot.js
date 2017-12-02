@@ -193,6 +193,8 @@ function msg_channel(channel, msg, debug = true) {
 
         }
         ++chs[ch[c]]["count"];
+      } else {
+        ch.slice(c,1);
       }
     }
   }
