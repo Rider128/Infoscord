@@ -152,7 +152,6 @@ function comp(w1 = "", w2 = "") {
 }
 
 function msg_channel(channel, msg, debug = true) {
-  var msg_w = [];
   var msg_c = 0;
   var count = 0;
   for (w in msg) {
@@ -165,13 +164,13 @@ function msg_channel(channel, msg, debug = true) {
     };
     nc1 = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
+      ++ch_c;
       if (!db["word"][msg[w]]["channel"][c]) {
         db["word"][msg[w]]["channel"][c] = {};
         db["word"][msg[w]]["channel"][c]["count"] = 0;
         db["word"][msg[w]]["channel"][c]["name"] = c;
       }
       nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
-      ++ch_c;
       ch_s += db["channel"][c]["count"];
       if (nc2 > nc1) {
         ch.push(db["channel"][c]["name"]);
@@ -180,26 +179,32 @@ function msg_channel(channel, msg, debug = true) {
 
     nch_s /= ch_c;
     ch_s /= ch_c;
+
     for (c in ch) {
       var ch_t = db["channel"][ch[c]]["count"];
-      if (ch_s * (1 - 5 / 100) < ch_t && ch_t < ch_s * (1 + 5 / 100)) {
+      if (!(ch_s * (1 - 5 / 100) < ch_t && ch_t < ch_s * (1 + 5 / 100))) {
         ch.slice(c, 1);
       }
     }
+
+    var nch_m = 0
+    var ch_m;
     for (c in ch) {
       var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      if (ch[c] != channel && !(nch_s * (1 - 5 / 100) < nch_t && nch_t < nch_s * (1 + 5 / 100))) {
-        msg_w.push(msg[w]);
-        ++count;
+      if (ch[c] == channel || (nch_s * (1 - 5 / 100) < nch_t && nch_t < nch_s * (1 + 5 / 100)) {
+          ch.slice(c, 1);
+        } else {
+          if (nch_m < nch_t) {
+            ch_m = ch[c]
+          }
+        }
       }
     }
-
-  }
-  if (msg_c * (20 / 100) < count) {
-    if (debug) {
-      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel);
+    if (msg_c * (20 / 100) < count) {
+      if (debug) {
+        console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel);
+      }
+      return db["channel"][ch]["name"];
     }
-    return db["channel"][ch]["name"];
+    return channel;
   }
-  return channel;
-}
