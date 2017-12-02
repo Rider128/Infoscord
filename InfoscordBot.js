@@ -40,7 +40,6 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    console.log(message.content);
     var msg = message.content.split(" ");
     var channel_name = message.channel.name;
     if (!time_count[channel_name]) {
@@ -70,6 +69,7 @@ client.on('message',
       console.log(channel_name + " corrected:", corrected);
     } else {
       if (!message.author.bot) {
+        console.log(message.content);
         destruct(channel_name, message.content);
         if (!time_count[channel_name]["sendable"]) {
           --time_count[channel_name]["count"];
@@ -87,6 +87,7 @@ client.on('message',
         }
       }
     }
+    console.log("-----------------------------------------------")
   });
 
 client.login(token);
@@ -188,7 +189,7 @@ function msg_channel(channel, msg, debug = true) {
   }
   if (msg_c * (20 / 100) < count) {
     if (debug) {
-      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel + " : ");
+      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel);
     }
     return db["channel"][ch]["name"];
   }
