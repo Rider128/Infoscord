@@ -7,7 +7,7 @@ const db = JSON.parse(fs.readFileSync(config.webroot + "/db.json"));
 const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
-var buff = JSON.parse({});
+var buff = JSON.parse('{}');
 
 client.on('ready', () => {
   console.log('I am ready!');
