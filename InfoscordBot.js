@@ -219,7 +219,7 @@ function msg_channel(channel, msg, debug = true) {
     if (debug) {
       console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
     }
-    return db["channel"][ch]["name"];
+    return db["channel"][ch_m]["name"];
   }
   return channel;
 }
