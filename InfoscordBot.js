@@ -173,10 +173,10 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
   }
-  if (debug) {
-    console.log("DETECT: " + db["channel"][c1]["name"] + " in " + channel + " : ", msg_w);
-  }
   if (msg.lenght * (20 / 100) < count) {
+    if (debug) {
+      console.log("DETECT: " + db["channel"][c1]["name"] + " in " + channel + " : ", msg_w);
+    }
     return db["channel"][c1]["name"];
   }
   return channel;
