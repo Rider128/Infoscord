@@ -205,22 +205,21 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
   }
-}
 
-var ch_cm = 0;
-var ch_m;
-for (c in chs) {
-  if (chs[c]["count"] > ch_cm) {
-    ch_cm = chs[c]["count"]
-    ch_m = chs[c]["name"]
+  var ch_cm = 0;
+  var ch_m;
+  for (c in chs) {
+    if (chs[c]["count"] > ch_cm) {
+      ch_cm = chs[c]["count"]
+      ch_m = chs[c]["name"]
+    }
   }
-}
 
-if (ch_m * (20 / 100) < count) {
-  if (debug) {
-    console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
+  if (msg_c * (20 / 100) < ch_cm) {
+    if (debug) {
+      console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
+    }
+    return db["channel"][ch]["name"];
   }
-  return db["channel"][ch]["name"];
-}
-return channel;
+  return channel;
 }
