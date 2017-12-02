@@ -40,7 +40,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    Console.log(message.content);
+    console.log(message.content);
     var msg = message.content.split(" ");
     var channel_name = message.channel.name;
     if (!time_count[channel_name]) {
