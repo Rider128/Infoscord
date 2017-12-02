@@ -78,7 +78,7 @@ client.on('message',
           time_count[channel_name]["sendable"] = true;
         }
         var channel = msg_channel(channel_name, buff[channel_name]);
-        if (channel !== "") {
+        if (channel !== channel_name) {
           if (time_count[channel_name]["sendable"]) {
             message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
             time_count[channel_name]["sendable"] = false;
@@ -173,7 +173,7 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
   }
-  if (msg.lenght * (1 - 80 / 100) > count) {
+  if (msg.lenght * (1 - 80 / 100) < count) {
     if (debug) {
       console.log("DETECT: " + channel, msg_w);
     }
