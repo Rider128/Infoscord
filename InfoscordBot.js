@@ -57,7 +57,7 @@ client.on('message',
     while (buff[channel_name].lenght > 64) {
       delete buff[channel_name][0];
     }
-    if (msg[0] == '<@385867044127637509>' && ! msg[1]) {
+    if (msg[0] == '<@385867044127637509>' && !msg[1]) {
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
         for (w in buff[channel_name]) {
@@ -68,7 +68,7 @@ client.on('message',
       }
       console.log(channel_name + " corrected:", corrected);
     } else {
-      if (message.author.username != "Infoscord") {
+      if (!message.author.bot) {
         destruct(channel_name, message.content);
         if (!time_count[channel_name]["sendable"]) {
           --time_count[channel_name]["count"];
@@ -152,34 +152,43 @@ function comp(w1 = "", w2 = "") {
 }
 
 function msg_channel(channel, msg, debug = true) {
-  msg_w = [];
-  msg_c = 0;
-  count = 0;
-  c1 = channel;
+  var msg_w = [];
+  var msg_c = 0;
+  var count = 0;
   for (w in msg) {
-    ++msg_c;
+    var channel_c = 0;
+    var channel_s = 0
+    var ch = channel;
+    var nch = 0;
     if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
       destruct(channel, msg[w]);
     };
-    nc = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
+    nc1 = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
       if (!db["word"][msg[w]]["channel"][c]) {
         db["word"][msg[w]]["channel"][c] = {};
         db["word"][msg[w]]["channel"][c]["count"] = 0;
         db["word"][msg[w]]["channel"][c]["name"] = c;
       }
-      if (msg[w][0] != "@" && msg[w][0] != "#" && db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
-        c1 = c;
-        ++count;
-        msg_w.push(msg[w])
+      nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"]
+        ++channel_c;
+      channel_s += nc2
+      if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc * 1.3) {
+        ch = c;
+        nch = nc2;
       }
+    }
+    channel_s /= channel_c;
+    if (!(channel_s * (1 - 5 / 100) < nch && nch < channel_s * (1 + 5 / 100))) {
+      msg_w.push(msg[w]);
+      ++count;
     }
   }
   if (msg_c * (20 / 100) < count) {
     if (debug) {
-      console.log("DETECT: " + db["channel"][c1]["name"] + " in " + channel + " : ", msg_w);
+      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel + " : ", msg_w);
     }
-    return db["channel"][c1]["name"];
+    return db["channel"][ch]["name"];
   }
   return channel;
 }
