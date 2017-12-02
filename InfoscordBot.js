@@ -7,6 +7,7 @@ const db = JSON.parse(fs.readFileSync(config.webroot + "/db.json"));
 const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
+var buff = JSON.parse({});
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -38,11 +39,15 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
+    buff[message.channel.name] = message.content + " " + buff[message.channel.name];
+    if (buff[message.channel.name].lenght > 1024) {
+      buff[message.channel.name] = buff[message.channel.name].subtring(buff.lenght - 1024);
+    }
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
-      var channel = msg_channel(message.channel.name, message.content)
+      var channel = msg_channel(message.channel.name, message.content);
       if (channel !== "") {
-        message.channel.send(message.author.username + ": Le channel #" + channel + " est plus adapté à votre conevrsation. ^^");
+        message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
       }
     }
   });
@@ -128,13 +133,14 @@ function msg_channel(channel, msg) {
         db["word"][msg_t[w]]["channel"][c]["count"] = 0;
         db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
+      console.log(db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"], nc);
       if (db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc) {
         c1 = c;
         ++count;
       }
     }
   }
-  if (2 * count > msg_c) {
+  if ( (1+80/100)*count > msg_c) {
     return db["channel"][c1]["name"];
   }
   return "";
