@@ -41,7 +41,7 @@ client.on('guildMemberUpdate',
 client.on('message',
   (message) => {
     var msg = message.content.split(" ");
-    var channel_name = message.author.username;
+    var channel_name = message.channel.name;
     if (!time_count[channel_name]) {
       time_count[channel_name] = {};
       time_count[channel_name]["count"] = 10;
@@ -59,7 +59,7 @@ client.on('message',
     }
     if (msg[0] == '<@385867044127637509>' && ! msg[1]) {
       var corrected = false
-      while (msg_channel(channel_name, buff[channel_name],false) != channel_name) {
+      while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
         for (w in buff[channel_name]) {
           ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
           ++db["channel"][channel_name]["count"];
