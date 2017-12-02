@@ -54,7 +54,7 @@ client.on('message',
         for (k in messages) {
           if (messages[k].channel.name == message.channel.name) {
             messages[k].delete();
-            messages.splices(k,1);
+            messages.splice(k,1);
           }
         }
         messages.push(message);
