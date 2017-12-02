@@ -188,7 +188,7 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
     for (c in ch) {
-      var nch_t = db["word"][ch[c]]["channel"][channel]["count"] / db["channel"][ch[c]]["count"];
+      var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
       if (ch[c] != channel && !(nch_s * (1 - 5 / 100) < nch && nch < nch_s * (1 + 5 / 100))) {
         msg_w.push(msg[w]);
         ++count;
