@@ -64,7 +64,7 @@ client.on('message',
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
         console.log("DETECT: " + channel);
-        if (time_count[channel]["sendable"]) {
+        if (time_count[message.channel.name]["sendable"]) {
           message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
           time_count[message.channel.name]["sendable"] = false;
         }
