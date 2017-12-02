@@ -40,8 +40,10 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if ( ! time_count[message.channel] ) {
+    if (!time_count[message.channel]) {
       time_count[message.channel] = {};
+      time_count[message.channel]["count"] = 10;
+      time_count[message.channel]["sendable"] = true;
     }
     if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
@@ -52,17 +54,17 @@ client.on('message',
     }
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
-      if ( ! time_count[message.channel]["sendable"] ) {
+      if (!time_count[message.channel]["sendable"]) {
         --time_count[message.channel]["count"];
       }
-      if ( time_count[message.channel]["count"] == 0 ) {
+      if (time_count[message.channel]["count"] == 0) {
         time_count[message.channel]["count"] = 10;
         time_count[message.channel]["sendable"] = true;
       }
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
         console.log("DETECT: " + channel);
-        if ( time_count[channel]["sendable"] ) {
+        if (time_count[channel]["sendable"]) {
           message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
           time_count[message.channel]["sendable"] = false;
         }
@@ -150,13 +152,13 @@ function msg_channel(channel, msg) {
         db["word"][msg_t[w]]["channel"][c]["count"] = 0;
         db["word"][msg_t[w]]["channel"][c]["name"] = c;
       }
-      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc*1.3) {
+      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
         c1 = c;
         ++count;
       }
     }
   }
-  if (count > msg_c * 80 / 100 ) {
+  if (count > msg_c * 80 / 100) {
     return db["channel"][c1]["name"];
   }
   return "";
