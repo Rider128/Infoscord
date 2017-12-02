@@ -58,13 +58,15 @@ client.on('message',
       delete buff[channel_name][0];
     }
     if (msg[0] == "@Infoscord" && msg.lenght == 1) {
+      var corrected = false
       while (msg_channel(channel_name, buff[channel_name],false) != channel_name) {
         for (w in buff[channel_name]) {
           ++db["word"][buff[channel_name]]["channel"][channel_name]["count"];
           ++db["channel"][channel_name]["count"];
         }
+        corrected = true;
       }
-      console.log(channel_name + " corrected");
+      console.log(channel_name + " corrected:", corrected);
     } else {
       if (message.author.username != "Infoscord") {
         destruct(channel_name, message.content);
