@@ -167,7 +167,7 @@ function msg_channel(channel, msg, debug = true) {
       if (msg[w][0] != "@" && msg[w][0] != "#" && db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
         c1 = c;
         ++count;
-        msg_w.push(msg[x])
+        msg_w.push(msg[w])
       }
     }
   }
