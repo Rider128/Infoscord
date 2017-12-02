@@ -153,9 +153,11 @@ function comp(w1 = "", w2 = "") {
 
 function msg_channel(channel, msg, debug = true) {
   msg_w = [];
+  msg_c = 0;
   count = 0;
   c1 = channel;
   for (w in msg) {
+    ++msg_c;
     if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
       destruct(channel, msg[w]);
     };
@@ -173,7 +175,7 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
   }
-  if (msg.lenght * (20 / 100) < count) {
+  if (msg_c * (20 / 100) < count) {
     if (debug) {
       console.log("DETECT: " + db["channel"][c1]["name"] + " in " + channel + " : ", msg_w);
     }
