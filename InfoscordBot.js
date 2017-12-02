@@ -88,7 +88,6 @@ client.on('message',
         }
       }
     }
-    console.log("-----------------------------------------------")
   });
 
 client.login(token);
