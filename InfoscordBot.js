@@ -40,33 +40,43 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if (!time_count[message.channel.name]) {
-      time_count[message.channel.name] = {};
-      time_count[message.channel.name]["count"] = 10;
-      time_count[message.channel.name]["sendable"] = true;
+    var cmd = message.content.spit(" ");
+    var channel_name = message.user.username;
+    if (!time_count[channel_name]) {
+      time_count[channel_name] = {};
+      time_count[channel_name]["count"] = 10;
+      time_count[channel_name]["sendable"] = true;
     }
-    if (!buff[message.channel.name]) {
-      buff[message.channel.name] = "";
+    if (!buff[channel_name]) {
+      buff[channel_name] = [];
     }
-    buff[message.channel.name] = message.content + " " + buff[message.channel.name];
-    if (buff[message.channel.name].lenght > 1024) {
-      buff[message.channel.name] = buff[message.channel.name].subtring(buff.lenght - 1024);
+    buff[channel_name] = buff[channel_name].push(message.content.split(" "));
+    if (buff[channel_name].lenght > 64) {
+      buff[channel_name].slice(0, buff[channel_name].lenght - 64);
     }
-    if (message.author.username != "Infoscord") {
-      destruct(message.channel.name, message.content);
-      if (!time_count[message.channel.name]["sendable"]) {
-        --time_count[message.channel.name]["count"];
+    if (cmd[0] == "@Infoscord") {
+      while (msg_channel(channel_name, buff[channel_name]) != channel_name) {
+        for (w in buff[channel_name]) {
+          ++db["word"][buff[channel_name]]["channel"][channel_name]["count"];
+          ++db["channel"][channel_name]["count"];
+        }
       }
-      if (time_count[message.channel.name]["count"] == 0) {
-        time_count[message.channel.name]["count"] = 10;
-        time_count[message.channel.name]["sendable"] = true;
-      }
-      var channel = msg_channel(message.channel.name, buff[message.channel.name]);
-      if (channel !== "") {
-        console.log("DETECT: " + channel);
-        if (time_count[message.channel.name]["sendable"]) {
-          message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
-          time_count[message.channel.name]["sendable"] = false;
+    } else {
+      if (message.author.username != "Infoscord") {
+        destruct(channel_name, message.content);
+        if (!time_count[channel_name]["sendable"]) {
+          --time_count[channel_name]["count"];
+        }
+        if (time_count[channel_name]["count"] == 0) {
+          time_count[channel_name]["count"] = 10;
+          time_count[channel_name]["sendable"] = true;
+        }
+        var channel = msg_channel(channel_name, buff[channel_name]);
+        if (channel !== "") {
+          if (time_count[channel_name]["sendable"]) {
+            message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
+            time_count[channel_name]["sendable"] = false;
+          }
         }
       }
     }
@@ -136,12 +146,11 @@ function comp(w1 = "", w2 = "") {
 }
 
 function msg_channel(channel, msg) {
-  msg_t = msg.split(" ");
-  msg_c = 0;
+  msg_t = msg;
+  msg_l = msg_t.lenght;
   count = 0;
   c1 = channel;
   for (w in msg_t) {
-    ++msg_c;
     if (!db["word"][msg_t[w]] || !db["word"][msg_t[w]]["channel"][channel]) {
       destruct(channel, msg_t[w]);
     };
@@ -154,11 +163,12 @@ function msg_channel(channel, msg) {
       }
       if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
         c1 = c;
-        ++count;
+        msg_t.slice(w, 1);
       }
     }
   }
-  if (count > msg_c * 80 / 100) {
+  if (msg_l * (1 - 80 / 100) > msg_t.lenght) {
+    console.log("DETECT: " + channel, msg_t);
     return db["channel"][c1]["name"];
   }
   return "";
