@@ -40,7 +40,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    var cmd = message.content.split(" ");
+    var msg = message.content.split(" ");
     var channel_name = message.author.username;
     if (!time_count[channel_name]) {
       time_count[channel_name] = {};
@@ -50,9 +50,12 @@ client.on('message',
     if (!buff[channel_name]) {
       buff[channel_name] = [];
     }
-    buff[channel_name] = buff[channel_name].push(message.content.split(" "));
-    if (buff[channel_name].lenght > 64) {
-      buff[channel_name].slice(0, buff[channel_name].lenght - 64);
+    for (w in cmd) {
+      buff[channel_name][cmd[w]] = cmd[w];
+
+    }
+    while (buff[channel_name].lenght > 64) {
+      delete buff[channel_name][0];
     }
     if (cmd[0] == "@Infoscord") {
       while (msg_channel(channel_name, buff[channel_name]) != channel_name) {
@@ -167,7 +170,7 @@ function msg_channel(channel, msg) {
       }
     }
   }
-  if (msg_l * (1 - 80 / 100) > msg_t.lenght) {
+  if (msg_l * (1 - 20 / 100) > msg_t.lenght) {
     console.log("DETECT: " + channel, msg_t);
     return db["channel"][c1]["name"];
   }
