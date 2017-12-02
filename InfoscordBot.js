@@ -87,7 +87,6 @@ function destruct(channel, msg) {
         db["channel"][channel] = {};
         db["channel"][channel]["count"] = 0;
         db["channel"][channel]["name"] = channel;
-
       }
       if (!db["word"][words[w2]]["channel"][channel]) {
         db["word"][words[w2]]["channel"][channel] = {};
@@ -129,8 +128,8 @@ function msg_channel(channel, msg) {
   c1 = channel;
   for (w in msg_t) {
     ++msg_c;
-    while ( !db["word"][msg_t[w]] ) {
-      console.log('wait');
+    if ( !db["word"][msg_t[w]] ) {
+      destruct(channel,msg_t[w]);
     };
     nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
