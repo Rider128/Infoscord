@@ -173,7 +173,7 @@ function msg_channel(channel, msg, debug = true) {
       nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"]
         ++channel_c;
       channel_s += nc2
-      if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc * 1.3) {
+      if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc1 * 1.3) {
         ch = c;
         nch = nc2;
       }
