@@ -51,11 +51,12 @@ client.on('message',
       destruct(message.channel.name, message.content);
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
+        console.log("DETECT: " + channel);
+        --time_count;
         if ( time_count[channel] == 0) {
           message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
           time_count[channel] = 10;
         }
-        --time_count;
       }
     }
   });
