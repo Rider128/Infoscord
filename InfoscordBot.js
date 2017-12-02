@@ -148,30 +148,32 @@ function comp(w1 = "", w2 = "") {
   return s;
 }
 
-function msg_channel(channel, msg) {
-  msg_t = msg;
-  msg_l = msg_t.lenght;
+function msg_channel(channel, msg, debug = true) {
+  msg_w = [];
   count = 0;
   c1 = channel;
-  for (w in msg_t) {
-    if (!db["word"][msg_t[w]] || !db["word"][msg_t[w]]["channel"][channel]) {
-      destruct(channel, msg_t[w]);
+  for (w in msg) {
+    if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
+      destruct(channel, msg[w]);
     };
-    nc = db["word"][msg_t[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
+    nc = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
-      if (!db["word"][msg_t[w]]["channel"][c]) {
-        db["word"][msg_t[w]]["channel"][c] = {};
-        db["word"][msg_t[w]]["channel"][c]["count"] = 0;
-        db["word"][msg_t[w]]["channel"][c]["name"] = c;
+      if (!db["word"][msg[w]]["channel"][c]) {
+        db["word"][msg[w]]["channel"][c] = {};
+        db["word"][msg[w]]["channel"][c]["count"] = 0;
+        db["word"][msg[w]]["channel"][c]["name"] = c;
       }
-      if (msg_t[w][0] != "@" && msg_t[w][0] != "#" && db["word"][msg_t[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
+      if (msg[w][0] != "@" && msg[w][0] != "#" && db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"] > nc * 1.3) {
         c1 = c;
-        msg_t.slice(w, 1);
+        ++count;
+        msg_w.push(msg[x])
       }
     }
   }
-  if (msg_l * (1 - 20 / 100) > msg_t.lenght) {
-    console.log("DETECT: " + channel, msg_t);
+  if (msg_l * (1 - 80 / 100) > count) {
+    if (debug) {
+      console.log("DETECT: " + channel, msg_w);
+    }
     return db["channel"][c1]["name"];
   }
   return "";
