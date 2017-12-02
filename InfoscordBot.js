@@ -179,5 +179,5 @@ function msg_channel(channel, msg, debug = true) {
     }
     return db["channel"][c1]["name"];
   }
-  return "";
+  return channel;
 }
