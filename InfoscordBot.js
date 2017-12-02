@@ -40,10 +40,10 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if (!time_count[message.channel]) {
-      time_count[message.channel] = {};
-      time_count[message.channel]["count"] = 10;
-      time_count[message.channel]["sendable"] = true;
+    if (!time_count[message.channel.name]) {
+      time_count[message.channel.name] = {};
+      time_count[message.channel.name]["count"] = 10;
+      time_count[message.channel.name]["sendable"] = true;
     }
     if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
@@ -54,19 +54,19 @@ client.on('message',
     }
     if (message.author.username != "Infoscord") {
       destruct(message.channel.name, message.content);
-      if (!time_count[message.channel]["sendable"]) {
-        --time_count[message.channel]["count"];
+      if (!time_count[message.channel.name]["sendable"]) {
+        --time_count[message.channel.name]["count"];
       }
-      if (time_count[message.channel]["count"] == 0) {
-        time_count[message.channel]["count"] = 10;
-        time_count[message.channel]["sendable"] = true;
+      if (time_count[message.channel.name]["count"] == 0) {
+        time_count[message.channel.name]["count"] = 10;
+        time_count[message.channel.name]["sendable"] = true;
       }
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
         console.log("DETECT: " + channel);
         if (time_count[channel]["sendable"]) {
           message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
-          time_count[message.channel]["sendable"] = false;
+          time_count[message.channel.name]["sendable"] = false;
         }
       }
     }
