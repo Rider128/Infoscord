@@ -108,7 +108,6 @@ function destruct(channel, msg) {
     }
     for (var w2 in db["word"]) {
       if (comp(msg_t[w1], db["word"][w2]["name"]) < config.matchn) {
-        //console.log(msg_t[w1], db["word"][w2]["name"]);
         words.push(db["word"][w2]["name"]);
       }
     }
@@ -154,6 +153,7 @@ function comp(w1 = "", w2 = "") {
 function msg_channel(channel, msg, debug = true) {
   var msg_c = 0;
   var chs = JSON.parse('{}');
+  var ch_simw = [];
   for (w in msg) {
     ++msg_c;
     var ch = [];
@@ -171,11 +171,20 @@ function msg_channel(channel, msg, debug = true) {
       nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
       if (nc2 > nc1) {
         ch.push(db["channel"][c]["name"]);
+        ch_simw.push(0);
+      }
+    }
+
+    for (w_c in db["word"]) {
+      for (c in ch) {
+        if (db["word"][w_c][ch[c]] && comp(db["word"][w_c],msg[w])) {
+          ++ch_simw[c];
+        }
       }
     }
 
     for (c in ch) {
-      var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
+      var nch_t =  / db["channel"][ch[c]]["count"];
       if (db["channel"][ch[c]]["count"] > 1000 && !(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
         if (!chs[ch[c]]) {
           chs[ch[c]] = {};
@@ -197,7 +206,7 @@ function msg_channel(channel, msg, debug = true) {
     }
   }
 
-  if (msg_c * (20 / 100) < ch_cm) {
+  if (msg_c * (10 / 100) < ch_cm) {
     if (debug) {
       console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
     }
