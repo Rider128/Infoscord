@@ -39,7 +39,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
-    if  (!buff[message.channel.name]) {
+    if (!buff[message.channel.name]) {
       buff[message.channel.name] = "";
     }
     buff[message.channel.name] = message.content + " " + buff[message.channel.name];
@@ -47,11 +47,12 @@ client.on('message',
       buff[message.channel.name] = buff[message.channel.name].subtring(buff.lenght - 1024);
     }
     if (message.author.username != "Infoscord") {
-      destruct(message.channel.name, message.content);
-      var channel = msg_channel(message.channel.name, buff[message.channel.name]);
-      if (channel !== "") {
-        message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
-      }
+      destruct(message.channel.name, message.content).then(() => {
+        var channel = msg_channel(message.channel.name, buff[message.channel.name]);
+        if (channel !== "") {
+          message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
+        }
+      });
     }
   });
 
@@ -143,7 +144,7 @@ function msg_channel(channel, msg) {
       }
     }
   }
-  if ( (1+80/100)*count > msg_c) {
+  if ((1 + 80 / 100) * count > msg_c) {
     return db["channel"][c1]["name"];
   }
   return "";
