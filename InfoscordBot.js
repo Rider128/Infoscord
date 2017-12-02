@@ -40,6 +40,7 @@ client.on('guildMemberUpdate',
 
 client.on('message',
   (message) => {
+    Console.log(message.content);
     var msg = message.content.split(" ");
     var channel_name = message.channel.name;
     if (!time_count[channel_name]) {
@@ -188,7 +189,7 @@ function msg_channel(channel, msg, debug = true) {
   }
   if (msg_c * (20 / 100) < count) {
     if (debug) {
-      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel + " : ", msg_w);
+      console.log("DETECT: " + db["channel"][ch]["name"] + " in " + channel + " : ");
     }
     return db["channel"][ch]["name"];
   }
