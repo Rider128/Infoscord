@@ -184,7 +184,7 @@ function msg_channel(channel, msg, debug = true) {
     }
 
     for (c in ch) {
-      var nch_t = ch_simw[c] * ch_simdb["word"][msg[w]][ch[c]]["count"] / db["channel"][ch[c]]["count"];
+      var nch_t = ch_simw[c] * db["word"][msg[w]][ch[c]]["count"] / db["channel"][ch[c]]["count"];
       if (db["channel"][ch[c]]["count"] > 1000 && !(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
         if (!chs[ch[c]]) {
           chs[ch[c]] = {};
