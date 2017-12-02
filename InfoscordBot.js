@@ -208,7 +208,7 @@ function msg_channel(channel, msg, debug = true) {
     }
   }
 
-  if (msg_c * (10 / 100) < ch_cm) {
+  if (msg_c * (30 / 100) < ch_cm) {
     if (debug) {
       console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
     }
