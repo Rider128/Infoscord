@@ -57,7 +57,7 @@ client.on('message',
     while (buff[channel_name].lenght > 64) {
       delete buff[channel_name][0];
     }
-    if (msg[0] == '<@385867044127637509>' && msg.lenght == 1) {
+    if (msg[0] == '<@385867044127637509>' && ! msg[1]) {
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name],false) != channel_name) {
         for (w in buff[channel_name]) {
