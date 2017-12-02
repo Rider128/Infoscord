@@ -50,14 +50,14 @@ client.on('message',
     if (!buff[channel_name]) {
       buff[channel_name] = [];
     }
-    for (w in cmd) {
-      buff[channel_name][cmd[w]] = cmd[w];
+    for (w in msg) {
+      buff[channel_name][msg[w]] = msg[w];
 
     }
     while (buff[channel_name].lenght > 64) {
       delete buff[channel_name][0];
     }
-    if (cmd[0] == "@Infoscord") {
+    if (msg[0] == "@Infoscord" && msg.lenght == 1) {
       while (msg_channel(channel_name, buff[channel_name]) != channel_name) {
         for (w in buff[channel_name]) {
           ++db["word"][buff[channel_name]]["channel"][channel_name]["count"];
