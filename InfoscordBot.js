@@ -157,10 +157,10 @@ function msg_channel(channel, msg, debug = true) {
   var msg_c = 0;
   var count = 0;
   for (w in msg) {
-    var channel_c = 0;
-    var channel_s = 0
-    var ch = channel;
-    var nch = 0;
+    var ch_c = 0;
+    var ch_s = 0
+    var ch = [channel];
+    var nch_s = 0
     if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
       destruct(channel, [msg[w]]);
     };
@@ -171,21 +171,30 @@ function msg_channel(channel, msg, debug = true) {
         db["word"][msg[w]]["channel"][c]["count"] = 0;
         db["word"][msg[w]]["channel"][c]["name"] = c;
       }
-      if (db["channel"][c]["count"] != 0) {
-        nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
-        ++channel_c;
-        channel_s += nc2
-        if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc1) {
-          ch = c;
-          nch = nc2;
-        }
+      nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
+      ++ch_c;
+      ch_s += db["channel"][c]["count"];
+      if (nc2 > nc1) {
+        ch.push(db["channel"][c]["name"]);
       }
     }
-    channel_s /= channel_c;
-    if (ch != channel && !(channel_s * (1 - 5 / 100) < nch && nch < channel_s * (1 + 5 / 100))) {
-      msg_w.push(msg[w]);
-      ++count;
+
+    nch_s /= ch_c;
+    ch_s /= ch_c;
+    for (c in ch) {
+      var ch_t = db["channel"][ch[c]]["count"];
+      if (ch_s * (1 - 5 / 100) < ch_t && ch_t < ch_s * (1 + 5 / 100)) {
+        ch.slice(c, 1);
+      }
     }
+    for (c in ch) {
+      var nch_t = db["word"][ch[c]]["channel"][channel]["count"] / db["channel"][ch[c]]["count"];
+      if (ch[c] != channel && !(nch_s * (1 - 5 / 100) < nch && nch < nch_s * (1 + 5 / 100))) {
+        msg_w.push(msg[w]);
+        ++count;
+      }
+    }
+
   }
   if (msg_c * (20 / 100) < count) {
     if (debug) {
