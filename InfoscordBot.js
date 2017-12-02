@@ -162,7 +162,7 @@ function msg_channel(channel, msg, debug = true) {
     var ch = channel;
     var nch = 0;
     if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
-      destruct(channel, msg[w]);
+      destruct(channel, [msg[w]]);
     };
     nc1 = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
     for (c in db["channel"]) {
