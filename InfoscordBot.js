@@ -176,7 +176,7 @@ function msg_channel(channel, msg, debug = true) {
 
     for (c in ch) {
       var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      if (!(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
+      if (db["channel"][ch[c]]["count"] > 1000 && !(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
         if (!chs[ch[c]]) {
           chs[ch[c]] = {};
           chs[ch[c]]["name"] = ch[c];
