@@ -192,24 +192,31 @@ function msg_channel(channel, msg, debug = true) {
 
     for (c in ch) {
       var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      if (ch[c] == channel || (nch_s * (1 - 5 / 100) < nch_t && nch_t < nch_s * (1 + 5 / 100))) {
-        ch.slice(c, 1);
+      if (ch[c] != channel && !(nch_s * (1 - 5 / 100) < nch_t && nch_t < nch_s * (1 + 5 / 100))) {
+        if (!chs[ch[c]]) {
+          chs[ch[c]] = {};
+          chs[ch[c]]["name"] = ch[c];
+          chs[ch[c]]["count"] = 0;
+
+        }
+        ++chs[ch[c]]["count"];
+      } else {
         msg_c -= db["word"][msg[w]]["channel"][ch[c]]["count"];
       }
-    }
-
-    for (c in ch) {
-      if (!chs[ch[c]]) {
-        chs[ch[c]] = 0;
-      }
-      ++chs[ch[c]];
     }
   }
 }
 
-for
+var ch_cm = 0;
+var ch_m;
+for (c in chs) {
+  if (chs[c]["count"] > ch_cm) {
+    ch_cm = chs[c]["count"]
+    ch_m = chs[c]["name"]
+  }
+}
 
-if (msg_c * (20 / 100) < count) {
+if (ch_m * (20 / 100) < count) {
   if (debug) {
     console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
   }
