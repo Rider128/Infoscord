@@ -170,12 +170,14 @@ function msg_channel(channel, msg, debug = true) {
         db["word"][msg[w]]["channel"][c]["count"] = 0;
         db["word"][msg[w]]["channel"][c]["name"] = c;
       }
-      nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"]
+      if (db["channel"][c]["count"] != 0) {
+        nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
         ++channel_c;
-      channel_s += nc2
-      if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc1 * 1.3) {
-        ch = c;
-        nch = nc2;
+        channel_s += nc2
+        if (msg[w][0] != "@" && msg[w][0] != "#" && nc2 > nc1) {
+          ch = c;
+          nch = nc2;
+        }
       }
     }
     channel_s /= channel_c;
