@@ -179,7 +179,7 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
     channel_s /= channel_c;
-    if (!(channel_s * (1 - 5 / 100) < nch && nch < channel_s * (1 + 5 / 100))) {
+    if (ch != channel && !(channel_s * (1 - 5 / 100) < nch && nch < channel_s * (1 + 5 / 100))) {
       msg_w.push(msg[w]);
       ++count;
     }
