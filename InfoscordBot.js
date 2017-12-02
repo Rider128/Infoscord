@@ -41,7 +41,7 @@ client.on('guildMemberUpdate',
 client.on('message',
   (message) => {
     var cmd = message.content.split(" ");
-    var channel_name = message.user.username;
+    var channel_name = message.author.username;
     if (!time_count[channel_name]) {
       time_count[channel_name] = {};
       time_count[channel_name]["count"] = 10;
