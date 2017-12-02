@@ -8,7 +8,7 @@ const token = config.token;
 
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
 var buff = JSON.parse('{}');
-var messages = [];
+var time_count = JSON.parse('{}');
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -51,14 +51,11 @@ client.on('message',
       destruct(message.channel.name, message.content);
       var channel = msg_channel(message.channel.name, buff[message.channel.name]);
       if (channel !== "") {
-        for (k in messages) {
-          if (messages[k].channel.name == message.channel.name) {
-            messages[k].delete();
-            messages.splice(k,1);
-          }
+        if ( time_count[channel] == 0) {
+          message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
+          time_count[channel] = 10;
         }
-        messages.push(message);
-        message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
+        --time_count;
       }
     }
   });
