@@ -156,43 +156,27 @@ function msg_channel(channel, msg, debug = true) {
   var chs = JSON.parse('{}');
   for (w in msg) {
     ++msg_c;
-    var ch_c = 0;
-    var ch_s = 0
     var ch = [];
-    var nch_s = 0
     if (!db["word"][msg[w]] || !db["word"][msg[w]]["channel"][channel]) {
       destruct(channel, [msg[w]]);
     };
-    nc1 = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
+    var nc1 = db["word"][msg[w]]["channel"][channel]["count"] / db["channel"][channel]["count"];
+
     for (c in db["channel"]) {
-      ++ch_c;
       if (!db["word"][msg[w]]["channel"][c]) {
         db["word"][msg[w]]["channel"][c] = {};
         db["word"][msg[w]]["channel"][c]["count"] = 0;
         db["word"][msg[w]]["channel"][c]["name"] = c;
       }
       nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
-      ch_s += db["channel"][c]["count"];
       if (nc2 > nc1) {
         ch.push(db["channel"][c]["name"]);
       }
     }
 
-    nch_s /= ch_c;
-    ch_s /= ch_c;
-
-    for (c in ch) {
-      var ch_t = db["channel"][ch[c]]["count"];
-      if (!(ch_s * (1 - 5 / 100) < ch_t && ch_t < ch_s * (1 + 5 / 100))) {
-        ch.slice(c, 1);
-        msg_c -= db["word"][msg[w]]["channel"][ch[c]]["count"];
-      }
-    }
-
-
     for (c in ch) {
       var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      if (ch[c] != channel && !(nch_s * (1 - 5 / 100) < nch_t && nch_t < nch_s * (1 + 5 / 100))) {
+      if (!(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
         if (!chs[ch[c]]) {
           chs[ch[c]] = {};
           chs[ch[c]]["name"] = ch[c];
@@ -200,8 +184,6 @@ function msg_channel(channel, msg, debug = true) {
 
         }
         ++chs[ch[c]]["count"];
-      } else {
-        msg_c -= db["word"][msg[w]]["channel"][ch[c]]["count"];
       }
     }
   }
