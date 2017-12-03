@@ -54,8 +54,7 @@ client.on('messageReactionAdd',
       console.log(channel_name + " corrected:", corrected);
       messageReaction.message.delete();
     }
-  }
-);
+  });
 
 client.on('message',
   (message) => {
