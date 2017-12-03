@@ -5,7 +5,6 @@ const readline = require('readline');
 const google = require('googleapis');
 const googleAuth = require('google-auth-library');
 const client = new Discord.Client();
-const timer = require('timers');
 
 const token = config.token;
 
@@ -26,7 +25,7 @@ fs.readFile('client_secret.json', (err, content) => {
     console.log('Error loading client secret file: ' + err);
     return;
   }
-  timer.setInverval(() => {
+  setInterval(() => {
     authorize(JSON.parse(content), {
       'params': {
         'id': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
