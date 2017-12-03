@@ -385,7 +385,7 @@ function channelsListById(auth, requestData) {
   var service = google.youtube('v3');
   var parameters = removeEmptyParameters(requestData['params']);
   parameters['auth'] = auth;
-  service.channels.list(parameters, function(err, response) {
+  service.subscriptions.list(parameters, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
       return;
