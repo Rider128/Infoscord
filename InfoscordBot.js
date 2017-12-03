@@ -45,7 +45,7 @@ client.on('messageReactionAdd',
     if (messageReaction.message.author.username == config.bot_name && messageReaction.emoji.name == config.emoji_correct) {
       var corrected = false
       for (w in buff[channel_name]) {
-        while (msg_channel(channel_name, [buff[channel_name][w]["name"]], false) != channel_name) {
+        while (msg_channel(channel_name, [buff[channel_name][w]], false) != channel_name) {
           ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
           ++db["channel"][channel_name]["count"];
           corrected = true;
