@@ -44,12 +44,12 @@ client.on('messageReactionAdd',
     var channel_name = messageReaction.message.channel.name
     if (messageReaction.message.author.username == config.bot_name && messageReaction.emoji.name == config.emoji_correct) {
       var corrected = false
-      while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
-        for (w in buff[channel_name]) {
+      for (w in buff[channel_name]) {
+        while (msg_channel(channel_name, [buff[channel_name][w]["name"]], false) != channel_name) {
           ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
           ++db["channel"][channel_name]["count"];
+          corrected = true;
         }
-        corrected = true;
       }
       console.log(channel_name + " corrected:", corrected);
       messageReaction.message.delete();
