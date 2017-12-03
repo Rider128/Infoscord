@@ -177,7 +177,7 @@ function msg_channel(channel, msg, debug = true) {
 
     for (w_c in db["word"]) {
       for (c in ch) {
-        if (db["word"][w_c][ch[c]] && comp(db["word"][w_c],msg[w])) {
+        if (db["word"][w_c]["channel"][ch[c]] && comp(db["word"][w_c]["name"],msg[w])) {
           ++ch_simw[c];
         }
       }
