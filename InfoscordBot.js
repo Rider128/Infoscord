@@ -36,14 +36,6 @@ fs.readFile('client_secret.json', (err, content) => {
 });
 
 client.on('ready', () => {
-  setInterval(() => {
-    authorize(JSON.parse(token), {
-      'params': {
-        'id': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
-        'part': 'snippet,contentDetails,statistics'
-      }
-    }, channelsListById);
-  }, config.youtube_time);
   console.log('I am ready!');
 });
 
