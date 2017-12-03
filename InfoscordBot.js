@@ -42,6 +42,7 @@ client.on('guildMemberUpdate',
 client.on('messageReactionAdd',
   (messageReaction, User) => {
     var channel_name = messageReaction.message.channel.name
+    console.log(messageReaction.Emoji.name);
     if (messageReaction.message.author == "Infoscord" && messageReaction.Emoji.name == "e1") {
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
