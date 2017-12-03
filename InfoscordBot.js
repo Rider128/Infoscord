@@ -159,7 +159,7 @@ function destruct(channel, msg) {
   fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
 }
 
-function comp(w1, w2) {
+function comp(w1="", w2="") {
   var s = 0;
   var word1 = JSON.parse(fs.readFileSync('word.json'));
   var w1_t = w1.toLowerCase().split("");
@@ -180,7 +180,7 @@ function comp(w1, w2) {
   return s;
 }
 
-function msg_channel(channel, msg, debug) {
+function msg_channel(channel, msg, debug=true) {
   var msg_c = 0;
   var chs = JSON.parse('{}');
   var ch_simw = [];
