@@ -133,7 +133,7 @@ function destruct(channel, msg) {
       db["word"][words[w2]]["channel"][channel]["count"] += 1;
     }
   }
-  fs.writeFileSync("./db.json", JSON.stringify(db));
+  fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
 }
 
 function comp(w1 = "", w2 = "") {
