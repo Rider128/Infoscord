@@ -9,6 +9,7 @@ const token = config.token;
 var adminProfile = JSON.parse(fs.readFileSync(config.webroot + "/adminProfile.json"));
 var buff = JSON.parse('{}');
 var time_count = JSON.parse('{}');
+var msg_bot = [];
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -38,6 +39,24 @@ client.on('guildMemberUpdate',
     });
   });
 
+client.on('messageReactionAdd',
+  (messageReaction, User) => {
+    var channel_name = messageReaction.message.channel.name
+    if (messageReaction.message.author == "Infoscord") {
+      var corrected = false
+      while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
+        for (w in buff[channel_name]) {
+          ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
+          ++db["channel"][channel_name]["count"];
+        }
+        corrected = true;
+      }
+      console.log(channel_name + " corrected:", corrected);
+      messageReaction.message.delete();
+    }
+  }
+);
+
 client.on('message',
   (message) => {
     var msg = message.content.split(" ");
@@ -57,33 +76,21 @@ client.on('message',
     while (buff[channel_name].lenght > 64) {
       delete buff[channel_name][0];
     }
-    if (msg[0] == '<@385867044127637509>' && !msg[1]) {
-      var corrected = false
-      while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
-        for (w in buff[channel_name]) {
-          ++db["word"][buff[channel_name][w]]["channel"][channel_name]["count"];
-          ++db["channel"][channel_name]["count"];
-        }
-        corrected = true;
+    if (!message.author.bot) {
+      console.log(channel_name, ":", message.content);
+      destruct(channel_name, message.content.split(" "));
+      if (!time_count[channel_name]["sendable"]) {
+        --time_count[channel_name]["count"];
       }
-      console.log(channel_name + " corrected:", corrected);
-    } else {
-      if (!message.author.bot) {
-        console.log(channel_name, ":", message.content);
-        destruct(channel_name, message.content.split(" "));
-        if (!time_count[channel_name]["sendable"]) {
-          --time_count[channel_name]["count"];
-        }
-        if (time_count[channel_name]["count"] == 0) {
-          time_count[channel_name]["count"] = 10;
-          time_count[channel_name]["sendable"] = true;
-        }
-        var channel = msg_channel(channel_name, buff[channel_name]);
-        if (channel !== channel_name) {
-          if (time_count[channel_name]["sendable"]) {
-            message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
-            time_count[channel_name]["sendable"] = false;
-          }
+      if (time_count[channel_name]["count"] == 0) {
+        time_count[channel_name]["count"] = 10;
+        time_count[channel_name]["sendable"] = true;
+      }
+      var channel = msg_channel(channel_name, buff[channel_name]);
+      if (channel !== channel_name) {
+        if (time_count[channel_name]["sendable"]) {
+          message.channel.send("Le channel #" + channel + " est plus adapté à votre conversation. ^^");
+          time_count[channel_name]["sendable"] = false;
         }
       }
     }
@@ -195,7 +202,7 @@ function msg_channel(channel, msg, debug = true) {
         }
         ++chs[ch[c]]["count"];
       } else {
-        ch.slice(c,1);
+        ch.slice(c, 1);
       }
     }
   }
