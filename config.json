@@ -6,5 +6,7 @@
 	"buffer_size" : 64,
 	"channel_words_min" : 1000,
 	"error_percents" : 5,
-	"words_differents_percents" : 20
+	"words_differents_percents" : 20,
+	"bot_name" : "",
+	"emoji_correct": ""
 }

@@ -42,7 +42,7 @@ client.on('guildMemberUpdate',
 client.on('messageReactionAdd',
   (messageReaction, User) => {
     var channel_name = messageReaction.message.channel.name
-    if (messageReaction.message.author.username == "Infoscord" && messageReaction.emoji.name == "e1") {
+    if (messageReaction.message.author.username == config.bot_name && messageReaction.emoji.name == config.emoji_correct) {
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
         for (w in buff[channel_name]) {
