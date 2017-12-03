@@ -26,7 +26,7 @@ fs.readFile('client_secret.json', (err, content) => {
     console.log('Error loading client secret file: ' + err);
     return;
   }
-  setInverval(() => {
+  timer.setInverval(() => {
     authorize(JSON.parse(content), {
       'params': {
         'id': 'UC_x5XG1OV2P6uZZ5FSM9Ttw',
