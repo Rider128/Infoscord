@@ -175,16 +175,17 @@ function msg_channel(channel, msg, debug = true) {
       }
     }
 
-    for (w_c in db["word"]) {
-      for (c in ch) {
-        if (db["word"][w_c]["channel"][ch[c]] && comp(db["word"][w_c]["name"],msg[w])) {
-          ++ch_simw[c];
-        }
-      }
-    }
+    // for (w_c in db["word"]) {
+    //   for (c in ch) {
+    //     if (db["word"][w_c]["channel"][ch[c]] && comp(db["word"][w_c]["name"],msg[w])) {
+    //       ++ch_simw[c];
+    //     }
+    //   }
+    // }
 
     for (c in ch) {
-      var nch_t = ch_simw[c] * db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
+      // var nch_t = ch_simw[c] * db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
+      var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
       if (db["channel"][ch[c]]["count"] > 1000 && !(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
         if (!chs[ch[c]]) {
           chs[ch[c]] = {};
