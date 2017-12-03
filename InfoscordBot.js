@@ -193,7 +193,7 @@ function msg_channel(channel, msg, debug = true) {
     for (c in ch) {
       // var nch_t = ch_simw[c] * db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
       if (db["channel"][ch[c]]["count"] > config.channel_words_min) {
-        var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"]; &&
+        var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
         if (nch_t >= nc1 * (1 + config.error_percents / 100)) {
           if (!chs[ch[c]]) {
             chs[ch[c]] = {};
