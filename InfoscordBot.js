@@ -4,6 +4,7 @@ const config = require('./config.json')
 const readline = require('readline');
 const google = require('googleapis');
 const googleAuth = require('google-auth-library');
+const Timer = reqire('timer');
 const client = new Discord.Client();
 
 const token = config.token;
