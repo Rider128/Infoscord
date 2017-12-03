@@ -8,5 +8,7 @@
 	"error_percents" : 5,
 	"words_differents_percents" : 20,
 	"bot_name" : "",
-	"emoji_correct": ""
+	"emoji_correct" : "",
+	"youtube_time" : 1000,
+	"token_dir" : "./google-token.json"
 }
