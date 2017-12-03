@@ -42,7 +42,6 @@ client.on('guildMemberUpdate',
 client.on('messageReactionAdd',
   (messageReaction, User) => {
     var channel_name = messageReaction.message.channel.name
-    // console.log(messageReaction.message.author);
     if (messageReaction.message.author.username == "Infoscord" && messageReaction.emoji.name == "e1") {
       var corrected = false
       while (msg_channel(channel_name, buff[channel_name], false) != channel_name) {
@@ -64,7 +63,7 @@ client.on('message',
     var channel_name = message.channel.name;
     if (!time_count[channel_name]) {
       time_count[channel_name] = {};
-      time_count[channel_name]["count"] = 10;
+      time_count[channel_name]["count"] = config.messages_interval;
       time_count[channel_name]["sendable"] = true;
     }
     if (!buff[channel_name]) {
@@ -74,7 +73,7 @@ client.on('message',
       buff[channel_name][msg[w]] = msg[w];
 
     }
-    while (buff[channel_name].lenght > 64) {
+    while (buff[channel_name].lenght > config.buffer_size) {
       delete buff[channel_name][0];
     }
     if (!message.author.bot) {
@@ -84,7 +83,7 @@ client.on('message',
         --time_count[channel_name]["count"];
       }
       if (time_count[channel_name]["count"] == 0) {
-        time_count[channel_name]["count"] = 10;
+        time_count[channel_name]["count"] = config.messages_interval;
         time_count[channel_name]["sendable"] = true;
       }
       var channel = msg_channel(channel_name, buff[channel_name]);
@@ -134,7 +133,7 @@ function destruct(channel, msg) {
       db["word"][words[w2]]["channel"][channel]["count"] += 1;
     }
   }
-  fs.writeFileSync(config.webroot + "/db.json", JSON.stringify(db));
+  fs.writeFileSync("./db.json", JSON.stringify(db));
 }
 
 function comp(w1 = "", w2 = "") {
@@ -179,7 +178,7 @@ function msg_channel(channel, msg, debug = true) {
       nc2 = db["word"][msg[w]]["channel"][c]["count"] / db["channel"][c]["count"];
       if (nc2 > nc1) {
         ch.push(db["channel"][c]["name"]);
-        ch_simw.push(0);
+        // ch_simw.push(0);
       }
     }
 
@@ -193,17 +192,19 @@ function msg_channel(channel, msg, debug = true) {
 
     for (c in ch) {
       // var nch_t = ch_simw[c] * db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"];
-      if (db["channel"][ch[c]]["count"] > 1000 && !(nc1 * (1 - 5 / 100) < nch_t && nch_t < nc1 * (1 + 5 / 100))) {
-        if (!chs[ch[c]]) {
-          chs[ch[c]] = {};
-          chs[ch[c]]["name"] = ch[c];
-          chs[ch[c]]["count"] = 0;
+      if (db["channel"][ch[c]]["count"] > config.channel_words_min) {
+        var nch_t = db["word"][msg[w]]["channel"][ch[c]]["count"] / db["channel"][ch[c]]["count"]; &&
+        if (nch_t >= nc1 * (1 + config.error_percents / 100)) {
+          if (!chs[ch[c]]) {
+            chs[ch[c]] = {};
+            chs[ch[c]]["name"] = ch[c];
+            chs[ch[c]]["count"] = 0;
 
+          }
+          ++chs[ch[c]]["count"];
+        } else {
+          ch.slice(c, 1);
         }
-        ++chs[ch[c]]["count"];
-      } else {
-        ch.slice(c, 1);
       }
     }
   }
@@ -217,7 +218,7 @@ function msg_channel(channel, msg, debug = true) {
     }
   }
 
-  if (msg_c * (20 / 100) < ch_cm) {
+  if (msg_c * (config.words_differents_percents / 100) < ch_cm) {
     if (debug) {
       console.log("DETECT: " + db["channel"][ch_m]["name"] + " in " + channel);
     }

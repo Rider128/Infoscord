@@ -1,5 +1,9 @@
 {
 	"token"  : "YOUR TOKEN MOTHER FUCKER",
-	"webroot" : "YOUR WEB ROOT",
-	"matchn": 1
+	"matchn" : 1,
+	"messages_interval" : 10,
+	"config.buffer_size" : 64,
+	"channel_words_min" : 1000,
+	"error_percents" : 5,
+	"words_differents_percents" : 20
 }
