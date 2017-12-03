@@ -40,7 +40,7 @@ client.on('guildMemberUpdate',
   });
 
 client.on('messageReactionAdd',
-  (messageReaction, User) => {
+  (messageReaction, user) => {
     var channel_name = messageReaction.message.channel.name
     if (messageReaction.message.author.username == config.bot_name && messageReaction.emoji.name == config.emoji_correct) {
       var corrected = false
